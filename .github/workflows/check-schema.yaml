@@ -20,7 +20,7 @@ jobs:
     # https://docs.github.com/en/actions/reference/encrypted-secrets
     # https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstepsenv
     env:
-      APOLLO_KEY: ${{ secrets.APOLLO_KEY }}
+      APOLLO_KEY: ${{ secrets.APOLLO_TOKEN }}
       APOLLO_GRAPH_REF: ${{ vars.APOLLO_GRAPH_REF }}
       APOLLO_SUBGRAPH_NAME: ${{ vars.APOLLO_SUBGRAPH_NAME }}
 
@@ -38,6 +38,10 @@ jobs:
           # Add Rover to the $GITHUB_PATH so it can be used in another step
           # https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#adding-a-system-path
           echo "$HOME/.rover/bin" >> $GITHUB_PATH
+
+      # Step: Check rover login
+      - name: Check rover login
+        run: rover config whoami
 
       # Step: Run schema checks
       - name: Run schema checks
